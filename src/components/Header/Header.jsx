@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Sidebar from "../Sidebar/Sidebar";
 import Link from "next/link";
@@ -12,6 +12,12 @@ const Header = () => {
   const pathname = usePathname();
   const { isSearch, setIsSearch } = useSearchContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (pathname == "/search") {
+      setIsSearch(true);
+    }
+  }, []);
 
   return (
     <header className="z-50">
@@ -60,7 +66,7 @@ const Header = () => {
             href="/search"
             className={`${
               pathname == "/search" ? "!text-green-100" : ""
-            } text-sm font-semibold leading-6 text-gray-900`}
+            } text-sm font-normal leading-6 text-gray-900`}
           >
             Find stock{" "}
             <span aria-hidden="true" className="">
@@ -68,17 +74,20 @@ const Header = () => {
             </span>
           </Link>
           <span
-            className="text-sm font-semibold cursor-pointer leading-6 text-gray-900"
+            className="text-sm font-normal cursor-pointer leading-6 text-gray-900"
             onClick={() => {
               setIsSearch(!isSearch);
             }}
           >
             {isSearch ? "Cancel" : "Search"}
           </span>
-          <span className="text-sm font-semibold cursor-default leading-6 text-gray-400">
+          <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
             Compare
           </span>
-          <span className="text-sm font-semibold cursor-default leading-6 text-gray-400">
+          <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
+            Advisory
+          </span>
+          <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
             Learn
           </span>
         </div>

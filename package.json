@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@mantine/carousel": "^7.5.0",
@@ -16,12 +17,13 @@
     "@mantine/hooks": "^7.5.0",
     "@tanstack/react-query": "^5.17.19",
     "axios": "^1.6.5",
-    "daisyui": "^4.6.0",
+    "chart.js": "^4.4.1",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "mini-css-extract-plugin": "^2.7.7",
     "next": "14.0.4",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-icons": "^5.0.1"
   },

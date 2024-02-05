@@ -14,8 +14,11 @@ export default function Home() {
         <div className="bg-white  px-6 md:pt-14 lg:px-8 ">
           <div className="w-full text-center md:text-left md:w-3/5 py-28 pb-48 ">
             <h1 className="text-4xl font-bold leading-[50px] tracking-tight text-gray-900 sm:text-6xl">
-              Spot <span className="text-green-100">opportunities</span> for
-              smarter <span className="">investment</span> decisons.
+              Spot{" "}
+              <span className="text-green-100 font-extrabold">
+                opportunities
+              </span>{" "}
+              for smarter <span className="">investment</span> decisons.
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {/* Analyse stock data. Find important metrics. Make better
