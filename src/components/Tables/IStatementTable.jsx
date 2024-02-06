@@ -31,7 +31,7 @@ const IStatementTable = ({ data }) => {
       </Table.Thead>
       <Table.Tbody>
         {values?.map((prop) => (
-          <Table.Tr key={prop?.title} className="text-base">
+          <Table.Tr key={prop?.title} className="text-base ">
             <Table.Td>{prop?.title}</Table.Td>
             <Table.Td>{prop?.value != null ? prop?.value : "---"}</Table.Td>
           </Table.Tr>

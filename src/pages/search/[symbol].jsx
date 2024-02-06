@@ -36,11 +36,13 @@ import {
   balanceSheet,
   cashflow,
 } from "@/data/data";
+import { useGetNews } from "@/services/api/news";
+
 import IStatementTable from "@/components/Tables/IStatementTable";
 import BSheetTable from "@/components/Tables/BSheetTable";
 import CashflowTable from "@/components/Tables/CashflowTable";
-import { useGetNews } from "@/services/api/news";
 import { newsData } from "@/data/news";
+import Slider from "react-slick";
 
 const feature_list = [
   {
@@ -110,6 +112,18 @@ const Search = () => {
   // const { data } = useGetCashflowStatement(symbol);
   // const { data } = useGetIncomeStatement(symbol);
   // const { data } = useGetNews(symbol);
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    lazyLoad: true,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 3000,
+    cssEase: "linear",
+  };
 
   const key_stats = [
     {
@@ -248,30 +262,14 @@ const Search = () => {
 
         <section className="w-10/12 mx-auto my-6 sm:my-10">
           <h3>Discover </h3>
-          <Carousel
-            slideSize="100%"
-            align="start"
-            slideGap="xl"
-            controlsOffset="xs"
-            withControls={true}
-            plugins={[autoplay.current]}
-            onMouseEnter={autoplay.current.stop}
-            onMouseLeave={autoplay.current.reset}
-            nextControlIcon={
-              <BsArrowRightCircleFill
-                style={{ width: rem(16), height: rem(16) }}
-              />
-            }
-            previousControlIcon={
-              <BsArrowLeftCircleFill
-                style={{ width: rem(16), height: rem(16) }}
-              />
-            }
-          >
-            {feature_list?.map((stock) => (
-              <StockCard key={stock?.company} props={stock} />
-            ))}
-          </Carousel>
+
+          <div className="slider-container">
+            <Slider {...sliderSettings}>
+              {feature_list?.map((stock) => (
+                <StockCard key={stock?.company} props={stock} />
+              ))}
+            </Slider>
+          </div>
         </section>
       </div>
     </Layout>
