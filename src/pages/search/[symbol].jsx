@@ -1,5 +1,12 @@
-import React, { useRef } from "react";
-import { Chart, Layout, SearchField, StockCard, NewsItem } from "@/components";
+import React, { useEffect, useRef } from "react";
+import {
+  Chart,
+  Layout,
+  SearchField,
+  StockCard,
+  NewsItem,
+  AllStats,
+} from "@/components";
 import microsoft from "@/assets/images/microsoft.png";
 import apple from "../../assets/images/apple.png";
 import lyft from "@/assets/images/lyft.png";
@@ -14,6 +21,26 @@ import { Accordion, rem } from "@mantine/core";
 import Image from "next/image";
 import { IoTrendingUp } from "react-icons/io5";
 import Stats from "@/components/Stats/Stats";
+import { useParams } from "next/navigation";
+// import {
+//   useGetFinancialData,
+//   useGetStats,
+//   useGetIncomeStatement,
+//   useGetCashflowStatement,
+//   useGetBalanceSheet,
+// } from "@/services/api/stock";
+import {
+  stats as statsData,
+  financials,
+  incomeStatement,
+  balanceSheet,
+  cashflow,
+} from "@/data/data";
+import IStatementTable from "@/components/Tables/IStatementTable";
+import BSheetTable from "@/components/Tables/BSheetTable";
+import CashflowTable from "@/components/Tables/CashflowTable";
+import { useGetNews } from "@/services/api/news";
+import { newsData } from "@/data/news";
 
 const feature_list = [
   {
@@ -76,33 +103,49 @@ const feature_list = [
 
 const Search = () => {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const { symbol } = useParams();
+  // const { data } = useGetStats(symbol);
+  // const { data } = useGetFinancialData(symbol);
+  // const { data: balanceSheetData } = useGetBalanceSheet(symbol);
+  // const { data } = useGetCashflowStatement(symbol);
+  // const { data } = useGetIncomeStatement(symbol);
+  // const { data } = useGetNews(symbol);
 
   const key_stats = [
     {
       title: "Market Cap.",
-      value: "30.2B",
+      value: "---",
     },
     {
       title: "Volume",
-      value: "110M",
+      value: "---",
     },
     {
       title: "P/E ratio",
-      value: "12.6",
+      value: statsData?.forwardPE?.fmt,
     },
   ];
 
   const financial_documents = [
     {
       title: "Income Statement",
+      component: (
+        <IStatementTable data={incomeStatement?.incomeStatementHistory[0]} />
+      ),
     },
     {
       title: "Balance Sheet",
+      component: <BSheetTable />,
     },
     {
       title: "Cash Flow Statement",
+      component: <CashflowTable />,
     },
   ];
+
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <Layout>
@@ -145,7 +188,7 @@ const Search = () => {
 
                 <span>
                   $
-                  {(15070)
+                  {financials?.currentPrice?.fmt
                     .toString()
                     .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
                 </span>
@@ -153,7 +196,7 @@ const Search = () => {
 
               <div className="flex items-center text-green-100 font-medium text-sm sm:text-lg">
                 <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />{" "}
-                {24.8}
+                {financials["52WeekChange"]}
                 <span className="text-[11px]">%</span>
               </div>
             </div>
@@ -161,7 +204,7 @@ const Search = () => {
           <Chart />
         </section>
 
-        <section className="w-full my-12 sm:my-20">
+        <section className="w-full my-12 sm:my-20 sm:mb-6">
           <h3 className="text-[40px] font-semibold text-center mb-20">
             Key Statistics
           </h3>
@@ -174,49 +217,37 @@ const Search = () => {
             ))}
           </div>
 
-          <div className="w-10/12 mx-auto grid grid-cols-3 divide-x-2 ">
-            <Stats title="Price/book" value="71.4" />
-            <Stats title="Earnings per share" value="71.4" />
-            <Stats title="Price to Earnings" value="71.4" />
-            <Stats title="PEG" value=".82" />
-            <Stats title="Dividend yield" value="71.4" />
-            <Stats title="Debt/Equity" value="71.4" />
-            <Stats title="Price/book" value="71.4" />
-            <Stats title="Return on assest" value="71.4" />
-            <Stats title="Dividend yield" value="71.4" />
-            <Stats title="Return on Equity" value="14.6%" />
-            <Stats title="Current ratio" value="3.1" />
-            <Stats title="Debt/Equity" value="71.4" />
-          </div>
+          <AllStats />
         </section>
 
-        <section className="w-10/12 mx-auto my-6 sm:my-10">
+        <section className="w-10/12 mx-auto my-6 sm:my-10 mt-6">
           <h3>Financial statements</h3>
           <Accordion>
-            {financial_documents?.map((doc) => (
-              <Accordion.Item key={doc.title} value={doc.title}>
+            {financial_documents?.map(({ title, component }) => (
+              <Accordion.Item key={title} value={title}>
                 <Accordion.Control className="sm:py-1">
-                  <h4 className="text-lg sm:text-xl font-normal">
-                    {doc.title}
-                  </h4>
+                  <h4 className="text-lg sm:text-xl font-normal">{title}</h4>
                 </Accordion.Control>
-                <Accordion.Panel className=""> {doc?.title}</Accordion.Panel>
+                <Accordion.Panel className=""> {component}</Accordion.Panel>
               </Accordion.Item>
             ))}
           </Accordion>
         </section>
 
         <section className="w-10/12 mx-auto my-6 sm:my-10">
-          <h3>Recent news</h3>
-          <div className="flex items-center justify-between">
+          <h3>Related news</h3>
+          <div className="flex items-start justify-between flex-wrap gap-y-6 gap-x-3 ">
+            {newsData?.slice(0, 6)?.map((e) => (
+              <NewsItem key={e.guid} data={e} />
+            ))}
+            {/* <NewsItem />
             <NewsItem />
-            <NewsItem />
-            <NewsItem />
+            <NewsItem /> */}
           </div>
         </section>
 
         <section className="w-10/12 mx-auto my-6 sm:my-10">
-          <h3>Recommended stocks</h3>
+          <h3>Discover </h3>
           <Carousel
             slideSize="100%"
             align="start"

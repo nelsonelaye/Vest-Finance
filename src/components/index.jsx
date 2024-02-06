@@ -6,3 +6,5 @@ export { default as SearchField } from "./SearchField/SearchField";
 export { default as StockCard } from "@/components/StockCard/StockCard";
 export { default as Chart } from "@/components/Chart/Chart";
 export { default as NewsItem } from "@/components/NewsItem/NewsItem";
+export { default as Stats } from "@/components/Stats/Stats";
+export { default as AllStats } from "@/components/Stats/AllStats";

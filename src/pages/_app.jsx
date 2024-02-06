@@ -4,14 +4,18 @@ import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { MantineProvider } from "@mantine/core";
 import SearchProvider from "@/context/SearchContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // core styles are required for all packages
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
   return (
-    <SearchProvider>
-      <MantineProvider>
-        <Component {...pageProps} />
-      </MantineProvider>
-    </SearchProvider>
+    <QueryClientProvider client={queryClient}>
+      <SearchProvider>
+        <MantineProvider>
+          <Component {...pageProps} />
+        </MantineProvider>
+      </SearchProvider>
+    </QueryClientProvider>
   );
 }

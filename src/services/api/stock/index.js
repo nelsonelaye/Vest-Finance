@@ -1,32 +1,47 @@
 import { useQuery } from "@tanstack/react-query";
+import { yFInstance } from "@/utils/axiosBase";
 
-const { yFInstance } = require("@/utils/axiosBase");
-
-export const getStats = async (ticker) => {
+export const getStockModules = async (ticker, module) => {
   const res = await yFInstance.get("/markets/stock/modules", {
     params: {
       ticker: ticker,
-      module: "statistics",
+      module: module,
     },
   });
 
   return res?.data;
 };
 
-export const getFinancialData = async (ticker) => {
-  const res = await yFInstance.get("/markets/stock/modules", {
-    params: {
-      ticker: ticker,
-      module: "financial-data",
-    },
+export const useGetStats = (ticker) => {
+  return useQuery({
+    queryKey: ["statistics", ticker],
+    queryFn: () => getStockModules(ticker, "statistics"),
   });
-
-  return res?.data;
 };
 
 export const useGetFinancialData = (ticker) => {
   return useQuery({
-    queryKey: ["stock financial data"],
-    queryFn: () => getFinancialData(ticker),
+    queryKey: ["financial data", ticker],
+    queryFn: () => getStockModules(ticker, "financial-data"),
+  });
+};
+
+export const useGetIncomeStatement = (ticker) => {
+  return useQuery({
+    queryKey: ["income statement", ticker],
+    queryFn: () => getStockModules(ticker, "income-statement"),
+  });
+};
+
+export const useGetBalanceSheet = (ticker) => {
+  return useQuery({
+    queryKey: ["balance sheet", ticker],
+    queryFn: () => getStockModules(ticker, "balance-sheet"),
+  });
+};
+export const useGetCashflowStatement = (ticker) => {
+  return useQuery({
+    queryKey: ["cashflow statement", ticker],
+    queryFn: () => getStockModules(ticker, "cashflow-statement"),
   });
 };

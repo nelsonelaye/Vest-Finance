@@ -1,8 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { useSearchContext } from "@/context/SearchContext";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
 import { Layout } from "@/components";
 
 export default function Home() {

@@ -7,9 +7,12 @@ import logo from "@/assets/images/logo.svg";
 import { usePathname } from "next/navigation";
 import { SearchField } from "../";
 import { useSearchContext } from "@/context/SearchContext";
+import { GoSearch } from "react-icons/go";
+import { LuSearch } from "react-icons/lu";
 
 const Header = () => {
   const pathname = usePathname();
+
   const { isSearch, setIsSearch } = useSearchContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -63,10 +66,10 @@ const Header = () => {
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-x-8">
           <Link
-            href="/search"
+            href="#"
             className={`${
               pathname == "/search" ? "!text-green-100" : ""
-            } text-sm font-normal leading-6 text-gray-900`}
+            } hidden text-sm font-normal leading-6 text-gray-900`}
           >
             Find stock{" "}
             <span aria-hidden="true" className="">
@@ -79,7 +82,11 @@ const Header = () => {
               setIsSearch(!isSearch);
             }}
           >
-            {isSearch ? "Cancel" : "Search"}
+            {isSearch ? (
+              ""
+            ) : (
+              <LuSearch className="text-gray-900 font-normal" fontSize={18} />
+            )}
           </span>
           <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
             Compare
