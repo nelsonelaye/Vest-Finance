@@ -26,7 +26,7 @@
 }
 
 * {
-  font-family: "Lato", "Helvetica Neue", sans-serif;
+  font-family: "GT America", "Roboto", "Lato", "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -42,4 +42,14 @@ h3 {
   font-weight: 600;
   line-height: 45px;
   margin-bottom: 20px;
+}
+
+.mantine-Table-td {
+  font-size: 17px;
+  margin: 10px 0px;
+  padding: 0px;
+  /* width: 0px; */
+}
+.mantine-Table-tr {
+  padding: 10px 0px !important;
 }

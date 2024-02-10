@@ -1,26 +1,10 @@
 import React from "react";
 import ITable from "./Table";
 import { Table } from "@mantine/core";
+// import { incomeStatementData as data} from "@/data/holistic";
+import { formatMetric, formatMetricKey } from "@/utils/helpers";
 
 const IStatementTable = ({ data }) => {
-  const values = [
-    {
-      title: "Total revenue",
-      value: data?.totalRevenue?.fmt,
-    },
-    {
-      title: "Gross profit",
-      value: data?.grossProfit?.fmt,
-    },
-    {
-      title: "Total operating expenses",
-      value: data?.totalOperatingExpenses?.fmt,
-    },
-    {
-      title: "Net income",
-      value: data?.netIncome?.fmt,
-    },
-  ];
   return (
     <Table striped>
       <Table.Thead>
@@ -30,12 +14,28 @@ const IStatementTable = ({ data }) => {
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
-        {values?.map((prop) => (
+        {Object?.keys(data)?.map((key, i) =>
+          i <= 4 ? (
+            ""
+          ) : (
+            <Table.Tr key={key}>
+              <Table.Td>{formatMetricKey(key)}</Table.Td>
+              <Table.Td>
+                {/* {cashflowData[key]} */}
+                {data[key]?.toFixed(0).length > 5
+                  ? formatMetric(data[key])
+                  : data[key]?.toFixed(2)}
+              </Table.Td>
+            </Table.Tr>
+          )
+        )}
+
+        {/* {values?.map((prop) => (
           <Table.Tr key={prop?.title} className="text-base ">
             <Table.Td>{prop?.title}</Table.Td>
             <Table.Td>{prop?.value != null ? prop?.value : "---"}</Table.Td>
           </Table.Tr>
-        ))}
+        ))} */}
       </Table.Tbody>
     </Table>
   );

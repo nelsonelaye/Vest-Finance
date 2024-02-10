@@ -4,3 +4,32 @@
 export function formatCurrency(value) {
   return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
+
+export function formatMetric(value) {
+  const absValue = Math.abs(value);
+  let formattedValue = "";
+
+  if (absValue >= 1e9) {
+    // If value is greater than or equal to 1 billion, convert to billion
+    formattedValue = (value / 1e9).toFixed(2) + "B";
+  } else if (absValue >= 1e6) {
+    // If value is greater than or equal to 1 million, convert to million
+    formattedValue = (value / 1e6).toFixed(2) + "M";
+  } else {
+    // If value is less than 1 million, leave it unchanged
+    formattedValue = value?.toString();
+  }
+
+  return formattedValue;
+}
+
+export function formatPercentage(value) {
+  return (value * 100).toFixed(2) + "%";
+}
+
+export function formatMetricKey(str) {
+  // Insert spaces before capital letters (except the first letter)
+  const formattedStr = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+  // Convert the string to title case
+  return formattedStr.charAt(0).toUpperCase() + formattedStr.slice(1);
+}

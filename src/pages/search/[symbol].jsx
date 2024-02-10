@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Chart,
   Layout,
@@ -43,6 +43,16 @@ import BSheetTable from "@/components/Tables/BSheetTable";
 import CashflowTable from "@/components/Tables/CashflowTable";
 import { newsData } from "@/data/news";
 import Slider from "react-slick";
+import {
+  getBalanceSheet,
+  getCashflowStatement,
+  getIncomeStatement,
+  getMetrics,
+  getRatios,
+  getStockModules,
+  getVolume,
+} from "@/services/api/stock";
+import { formatMetric } from "@/utils/helpers";
 
 const feature_list = [
   {
@@ -104,6 +114,14 @@ const feature_list = [
 ];
 
 const Search = () => {
+  const [metrics, setMetrics] = useState({});
+  const [ratios, setRatios] = useState({});
+  const [yStats, setYStats] = useState({});
+  const [volume, setVolume] = useState();
+  const [incomeStatement, setIncomeStatement] = useState({});
+  const [cashflow, setCashflow] = useState({});
+  const [balanceSheet, setBalanceSheet] = useState({});
+  const [yFinancialData, setYFinancialData] = useState({});
   const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   const params = useParams();
@@ -131,38 +149,71 @@ const Search = () => {
   const key_stats = [
     {
       title: "Market Cap.",
-      value: "---",
+      value: formatMetric(metrics?.marketCap) || "N/A",
     },
     {
       title: "Volume",
-      value: "---",
+      value: formatMetric(volume) || "N/A",
     },
     {
       title: "P/E ratio",
-      value: statsData?.forwardPE?.fmt,
+      value: metrics?.peRatio?.toFixed(2) || "N/A",
     },
   ];
 
   const financial_documents = [
     {
       title: "Income Statement",
-      component: (
-        <IStatementTable data={incomeStatement?.incomeStatementHistory[0]} />
-      ),
+      component: <IStatementTable data={incomeStatement} />,
     },
     {
       title: "Balance Sheet",
-      component: <BSheetTable />,
+      component: <BSheetTable data={balanceSheet} />,
     },
     {
       title: "Cash Flow Statement",
-      component: <CashflowTable />,
+      component: <CashflowTable data={cashflow} />,
     },
   ];
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
+  const handleStats = () => {
+    getStockModules(symbol, "statistics").then((res) => {
+      setYStats(res?.body);
+    });
+    getStockModules(symbol, "financial-data").then((res) => {
+      setYFinancialData(res?.body);
+    });
+    getMetrics(symbol).then((res) => {
+      if (res?.length > 0) {
+        setMetrics(res[0]);
+      }
+    });
+    getVolume(symbol).then((res) => {
+      setVolume(res[0]?.volume);
+    });
+
+    getRatios(symbol).then((res) => {
+      if (res?.length > 0) {
+        setRatios(res[0]);
+      }
+    });
+
+    getBalanceSheet(symbol).then((res) => {
+      setBalanceSheet(res[0]);
+    });
+    getCashflowStatement(symbol).then((res) => {
+      setCashflow(res[0]);
+    });
+    getIncomeStatement(symbol).then((res) => {
+      setIncomeStatement(res[0]);
+    });
+  };
+
+  useEffect(() => {
+    if (symbol) {
+      handleStats();
+    }
+  }, [symbol]);
 
   return (
     <Layout>
@@ -194,7 +245,7 @@ const Search = () => {
                   Apple Inc.
                 </h6>
                 <span className="text-sm sm:text-[14px] text-gray-500 font-medium">
-                  AAPL
+                  {symbol}
                 </span>
               </div>
             </div>
@@ -205,7 +256,7 @@ const Search = () => {
 
                 <span>
                   $
-                  {financials?.currentPrice?.fmt
+                  {yFinancialData?.currentPrice?.fmt
                     .toString()
                     .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
                 </span>
@@ -213,8 +264,8 @@ const Search = () => {
 
               <div className="flex items-center text-green-100 font-medium text-sm sm:text-lg">
                 <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />{" "}
-                {financials["52WeekChange"]}
-                <span className="text-[11px]">%</span>
+                {yFinancialData?.["52WeekChange"]?.fmt}
+                {/* <span className="text-[11px]">%</span> */}
               </div>
             </div>
           </div>
@@ -234,7 +285,11 @@ const Search = () => {
             ))}
           </div>
 
-          <AllStats />
+          <AllStats
+            yFData={{ ...yFinancialData, ...yStats }}
+            holData={{ ...ratios, ...metrics }}
+            data={{ ...ratios, ...metrics }}
+          />
         </section>
 
         <section className="w-10/12 mx-auto my-6 sm:my-10 mt-6">

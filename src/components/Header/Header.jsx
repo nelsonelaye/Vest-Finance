@@ -7,7 +7,6 @@ import logo from "@/assets/images/logo.svg";
 import { usePathname } from "next/navigation";
 import { SearchField } from "../";
 import { useSearchContext } from "@/context/SearchContext";
-import { GoSearch } from "react-icons/go";
 import { LuSearch } from "react-icons/lu";
 
 const Header = () => {
@@ -19,13 +18,15 @@ const Header = () => {
   useEffect(() => {
     if (pathname == "/search") {
       setIsSearch(true);
+    } else {
+      setIsSearch(false);
     }
   }, []);
 
   return (
     <header className="z-50">
       <nav
-        className="flex items-center justify-between pr-4 sm:p-6 py-0 lg:px-8"
+        className="flex items-center justify-between pr-4 py-0 sm:p-6 sm:py-3 lg:px-8"
         aria-label="Global"
       >
         <div className="flex z-10 lg:flex-1">
@@ -85,11 +86,14 @@ const Header = () => {
             {isSearch ? (
               ""
             ) : (
-              <LuSearch className="text-gray-900 font-normal" fontSize={18} />
+              <LuSearch
+                className="text-gray-900 font-normal mt-1"
+                fontSize={18}
+              />
             )}
           </span>
           <Link href="/compare">
-            <span className="text-sm font-normal cursor-default leading-6 ">
+            <span className="text-sm font-normal cursor-pointer leading-6 ">
               Compare
             </span>
           </Link>

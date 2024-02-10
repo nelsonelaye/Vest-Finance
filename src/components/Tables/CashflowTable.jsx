@@ -1,6 +1,8 @@
 import React from "react";
 import ITable from "./Table";
 import { Table } from "@mantine/core";
+// import { cashflowData as data } from "@/data/holistic";
+import { formatMetric, formatMetricKey } from "@/utils/helpers";
 
 const CashflowTable = ({ data }) => {
   const values = [];
@@ -13,12 +15,21 @@ const CashflowTable = ({ data }) => {
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
-        {values?.map((prop) => (
-          <Table.Tr key={prop?.title} className="text-base">
-            <Table.Td>{prop?.title}</Table.Td>
-            <Table.Td>{prop?.value != null ? prop?.value : "---"}</Table.Td>
-          </Table.Tr>
-        ))}
+        {Object?.keys(data)?.map((key, i) =>
+          i <= 4 ? (
+            ""
+          ) : (
+            <Table.Tr key={key}>
+              <Table.Td>{formatMetricKey(key)}</Table.Td>
+              <Table.Td>
+                {/* {data[key]} */}
+                {data[key]?.toFixed(0).length > 5
+                  ? formatMetric(data[key])
+                  : data[key]?.toFixed(2)}
+              </Table.Td>
+            </Table.Tr>
+          )
+        )}
       </Table.Tbody>
     </Table>
   );

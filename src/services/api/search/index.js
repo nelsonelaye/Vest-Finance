@@ -8,7 +8,7 @@ export const searchStock = async (query) => {
     },
   });
 
-  return res;
+  return res.data;
 };
 
 export const useSearchStock = (query) => {

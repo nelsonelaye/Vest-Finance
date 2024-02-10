@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { searchStock } from "@/services/api/search";
 // import { getStats } from "@/services/api/stock";
@@ -6,37 +6,36 @@ import { searchStock } from "@/services/api/search";
 import { results } from "@/data/data";
 import { useDebouncedCallback } from "use-debounce";
 import Link from "next/link";
+import styles from "./searchField.module.css";
 
-const SearchField = ({ variant, value }) => {
+const SearchField = ({ variant, value, className }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("ticker") || ""
-  );
-  const [searchResult, setSearchResult] = useState(results);
+  const symbol = searchParams.get("ticker");
+  const [searchQuery, setSearchQuery] = useState(symbol || "");
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleSearch = useDebouncedCallback((e) => {
     e.preventDefault();
-    if (e.code === "Enter") {
-      // searchStock(searchQuery).then((res) => {
-      //   console.log(res);
-      // });
-      // router.push({
-      //   pathname: "/search",
-      //   query: { symbol: searchQuery },
-      // });
-      // getStats(e.target?.value);
-    }
-  }, 3000);
+    searchStock(searchQuery).then((res) => {
+      setSearchResult(res?.body);
+    });
+  }, 1000);
+
+  useEffect(() => {
+    setSearchQuery(symbol || "");
+
+    setSearchResult([]);
+  }, []);
 
   return (
     <div
       className={`relative w-full   ${
         variant === "small" ? "mx-auto" : "sm:w-[600px]"
-      } sm:mx-auto`}
+      } sm:mx-auto ${className}`}
     >
       <input
-        type="search"
+        type="text"
         name="ticker"
         className={`${
           variant === "small"
@@ -44,41 +43,41 @@ const SearchField = ({ variant, value }) => {
             : variant === "primary"
             ? "py-2 px-4 rounded-lg"
             : "pt-6 pb-7 px-6 rounded-[50px]"
-        } border-[2px] border-gray-300 w-full   my-5 outline-none  sm:mx-auto`}
+        } my-0 border-[2px] border-gray-300 w-full   outline-none  sm:mx-auto`}
         placeholder="E.g. AAPL"
         autoComplete="off"
-        autoFocus
         onKeyUp={handleSearch}
         onChange={(e) => {
           setSearchQuery(e.target.value);
+          handleSearch(e);
         }}
-        value={value || searchQuery}
+        defaultValue={searchQuery || value}
       />
 
-      {/* {searchQuery.length > 1 && (
-        <div className="absolute  bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
-          No result
-        </div>
-      )} */}
-
-      {searchQuery.length > 1 ? (
-        <div className="absolute bg-white w-full flex flex-col h-auto max-h-[500px] overflow-y-auto  px-4 z-50 rounded-[15px] shadow-md">
-          {results?.map((r) => (
+      {searchQuery.length > 1 && searchResult?.length > 0 ? (
+        <div
+          className={`${styles.search_result} absolute bg-white w-full flex flex-col h-auto max-h-[500px] overflow-y-auto  px-4 z-50 rounded-[15px] shadow-md`}
+        >
+          {searchResult?.map((r) => (
             <Link key={r.symbol} href={`/search/${r.symbol}`}>
               <div
                 key={r.symbol}
                 className="  w-full px-6 py-4 border-b border-neutral-20 font-medium cursor-pointer"
               >
                 <p className="text-sm mb-1">{r.name}</p>
-                <p className="text-[12px] text-gray-600 ">{r.symbol}</p>
+                <p className="text-[12px] text-black-50 font-medium ">
+                  {r.symbol}
+                </p>
               </div>
             </Link>
           ))}
         </div>
-      ) : (
-        <div className="absolute hidden bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
+      ) : searchQuery.length > 1 && searchResult?.length === 0 ? (
+        <div className="absolute  bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
           No result
         </div>
+      ) : (
+        ""
       )}
     </div>
   );
