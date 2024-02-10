@@ -7,7 +7,7 @@ import { results } from "@/data/data";
 import { useDebouncedCallback } from "use-debounce";
 import Link from "next/link";
 
-const SearchField = ({ variant }) => {
+const SearchField = ({ variant, value }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(
@@ -23,19 +23,25 @@ const SearchField = ({ variant }) => {
       // });
       // router.push({
       //   pathname: "/search",
-      //   query: { ticker: searchQuery },
+      //   query: { symbol: searchQuery },
       // });
       // getStats(e.target?.value);
     }
   }, 3000);
 
   return (
-    <div className="relative w-full mx-6 sm:w-[600px]  sm:mx-auto">
+    <div
+      className={`relative w-full   ${
+        variant === "small" ? "mx-auto" : "sm:w-[600px]"
+      } sm:mx-auto`}
+    >
       <input
         type="search"
         name="ticker"
         className={`${
-          variant === "primary"
+          variant === "small"
+            ? "py-2 px-4 rounded-md"
+            : variant === "primary"
             ? "py-2 px-4 rounded-lg"
             : "pt-6 pb-7 px-6 rounded-[50px]"
         } border-[2px] border-gray-300 w-full   my-5 outline-none  sm:mx-auto`}
@@ -46,7 +52,7 @@ const SearchField = ({ variant }) => {
         onChange={(e) => {
           setSearchQuery(e.target.value);
         }}
-        value={searchQuery}
+        value={value || searchQuery}
       />
 
       {/* {searchQuery.length > 1 && (
@@ -70,7 +76,7 @@ const SearchField = ({ variant }) => {
           ))}
         </div>
       ) : (
-        <div className="absolute  bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
+        <div className="absolute hidden bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
           No result
         </div>
       )}

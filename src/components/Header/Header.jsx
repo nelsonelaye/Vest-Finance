@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <header className="z-50">
       <nav
-        className="flex items-center justify-between p-6 py-0 lg:px-8"
+        className="flex items-center justify-between pr-4 sm:p-6 py-0 lg:px-8"
         aria-label="Global"
       >
         <div className="flex z-10 lg:flex-1">
@@ -88,9 +88,11 @@ const Header = () => {
               <LuSearch className="text-gray-900 font-normal" fontSize={18} />
             )}
           </span>
-          <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
-            Compare
-          </span>
+          <Link href="/compare">
+            <span className="text-sm font-normal cursor-default leading-6 ">
+              Compare
+            </span>
+          </Link>
           <span className="text-sm font-normal cursor-default leading-6 text-neutral-50">
             Advisory
           </span>

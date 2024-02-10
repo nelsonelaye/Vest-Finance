@@ -105,7 +105,10 @@ const feature_list = [
 
 const Search = () => {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
-  const { symbol } = useParams();
+
+  const params = useParams();
+  const symbol = params?.symbol;
+
   // const { data } = useGetStats(symbol);
   // const { data } = useGetFinancialData(symbol);
   // const { data: balanceSheetData } = useGetBalanceSheet(symbol);
@@ -114,7 +117,7 @@ const Search = () => {
   // const { data } = useGetNews(symbol);
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -249,8 +252,19 @@ const Search = () => {
         </section>
 
         <section className="w-10/12 mx-auto my-6 sm:my-10">
+          <h3>About </h3>
+        </section>
+
+        <section className="w-10/12 mx-auto my-6 sm:my-10">
           <h3>Related news</h3>
-          <div className="flex items-start justify-between flex-wrap gap-y-6 gap-x-3 ">
+          <div className="slider-container">
+            <Slider {...sliderSettings}>
+              {newsData?.slice(0, 6)?.map((e) => (
+                <NewsItem key={e.guid} data={e} />
+              ))}
+            </Slider>
+          </div>
+          <div className="hidden items-start justify-between flex-wrap gap-y-6 gap-x-3 ">
             {newsData?.slice(0, 6)?.map((e) => (
               <NewsItem key={e.guid} data={e} />
             ))}
@@ -264,7 +278,7 @@ const Search = () => {
           <h3>Discover </h3>
 
           <div className="slider-container">
-            <Slider {...sliderSettings}>
+            <Slider {...sliderSettings} dots={true}>
               {feature_list?.map((stock) => (
                 <StockCard key={stock?.company} props={stock} />
               ))}

@@ -8,3 +8,5 @@ export { default as Chart } from "@/components/Chart/Chart";
 export { default as NewsItem } from "@/components/NewsItem/NewsItem";
 export { default as Stats } from "@/components/Stats/Stats";
 export { default as AllStats } from "@/components/Stats/AllStats";
+export { default as CColumn } from "@/components/CColumn/CColumn";
+export { default as PercentTrend } from "@/components/PercentTrend/PercentTrend";
