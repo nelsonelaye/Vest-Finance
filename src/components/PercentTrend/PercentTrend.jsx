@@ -8,11 +8,12 @@ const PercentTrend = ({ value, trend, className }) => {
         trend === "up" ? "text-green-100 " : "text-red-500"
       } ${className} font-bold text-sm sm:text-xl`}
     >
-      {trend === "up" ? (
-        <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />
-      ) : (
+      {value && value[0] === "-" ? (
         <IoTrendingDown className="mr-1 rotate-[30deg]" fontSize={20} />
+      ) : (
+        <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />
       )}
+
       {value}
       <span className="">%</span>
     </div>

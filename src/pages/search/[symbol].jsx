@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart,
   Layout,
@@ -14,30 +14,10 @@ import nike from "@/assets/images/nike.png";
 import snow from "@/assets/images/snow.png";
 import pfizer from "@/assets/images/pfizer.jpg";
 import voo from "@/assets/images/s&p.png";
-import { Carousel } from "@mantine/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { BsArrowRightCircleFill, BsArrowLeftCircleFill } from "react-icons/bs";
-import { Accordion, rem } from "@mantine/core";
+import { Accordion } from "@mantine/core";
 import Image from "next/image";
 import { IoTrendingUp } from "react-icons/io5";
-import Stats from "@/components/Stats/Stats";
 import { useParams } from "next/navigation";
-// import {
-//   useGetFinancialData,
-//   useGetStats,
-//   useGetIncomeStatement,
-//   useGetCashflowStatement,
-//   useGetBalanceSheet,
-// } from "@/services/api/stock";
-import {
-  stats as statsData,
-  financials,
-  incomeStatement,
-  balanceSheet,
-  cashflow,
-} from "@/data/data";
-import { useGetNews } from "@/services/api/news";
-
 import IStatementTable from "@/components/Tables/IStatementTable";
 import BSheetTable from "@/components/Tables/BSheetTable";
 import CashflowTable from "@/components/Tables/CashflowTable";
@@ -52,7 +32,7 @@ import {
   getStockModules,
   getVolume,
 } from "@/services/api/stock";
-import { formatMetric } from "@/utils/helpers";
+import { formatCurrency, formatMetric } from "@/utils/helpers";
 
 const feature_list = [
   {
@@ -117,12 +97,11 @@ const Search = () => {
   const [metrics, setMetrics] = useState({});
   const [ratios, setRatios] = useState({});
   const [yStats, setYStats] = useState({});
+  const [yFinancialData, setYFinancialData] = useState({});
   const [volume, setVolume] = useState();
   const [incomeStatement, setIncomeStatement] = useState({});
   const [cashflow, setCashflow] = useState({});
   const [balanceSheet, setBalanceSheet] = useState({});
-  const [yFinancialData, setYFinancialData] = useState({});
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   const params = useParams();
   const symbol = params?.symbol;
@@ -255,10 +234,7 @@ const Search = () => {
                 {/* <BiDollar /> */}
 
                 <span>
-                  $
-                  {yFinancialData?.currentPrice?.fmt
-                    .toString()
-                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+                  ${formatCurrency(yFinancialData?.currentPrice?.fmt)}
                 </span>
               </span>
 

@@ -19,15 +19,15 @@ const Compare = () => {
           <CColumn className="hidden md:block" />
         </section>
 
-        <div className="w-10/12 mx-auto border-b-[1px] border-b-[#e8e8ed] pb-2 my-5 sm:pb-5 sm:my-10">
+        {/* <div className="hidden w-10/12 mx-auto border-b-[1px] border-b-[#e8e8ed] pb-2 my-5 sm:pb-5 sm:my-10">
           <h2 className="text-3xl font-medium">Stats</h2>
-        </div>
+        </div> */}
 
-        <section className="w-full flex justify-evenly gap-6 md:justify-center md:gap-0">
+        {/* <section className="w-full flex justify-evenly gap-6 md:justify-center md:gap-0">
           <ColumnData />
           <ColumnData />
           <ColumnData className="hidden md:block" />
-        </section>
+        </section> */}
       </main>
     </Layout>
   );

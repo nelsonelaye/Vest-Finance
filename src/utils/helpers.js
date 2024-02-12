@@ -2,7 +2,9 @@
 // categorically, it doesn't belong anywhere else
 
 export function formatCurrency(value) {
-  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  if (value) {
+    return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
 }
 
 export function formatMetric(value) {
@@ -24,7 +26,9 @@ export function formatMetric(value) {
 }
 
 export function formatPercentage(value) {
-  return (value * 100).toFixed(2) + "%";
+  if (value) {
+    return (value * 100).toFixed(2) + "%";
+  }
 }
 
 export function formatMetricKey(str) {
