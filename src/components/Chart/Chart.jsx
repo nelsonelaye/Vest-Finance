@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,18 +12,49 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import moment from "moment";
+import { getUniqueMonths } from "@/utils/helpers";
+import { cData } from "@/data/cdata";
 
-const Chart = () => {
+const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
   ChartJS.register(
-    CategoryScale,
     LinearScale,
     PointElement,
+    CategoryScale,
     LineElement,
-    Title,
-    Tooltip,
     Filler,
-    Legend
+    Legend,
+    Title,
+    Tooltip
   );
+
+  const labels = Object.keys(cData).map((key) =>
+    moment(cData[key]?.date, "DD-MM-YYYY").format("MMMM")
+  );
+  // const labels = values?.map((v) => moment(v?.date).format("MMMM"));
+  // const labels = getUniqueMonths(values);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: "start",
+        label: "Dataset 2",
+        data: Object.keys(cData).map((key) => cData[key]?.close),
+        // data: values.map((v) => v?.close),
+        borderColor: "rgb(11, 223, 135)",
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+          gradient.addColorStop(0, "rgb(11, 223, 135)");
+          gradient.addColorStop(1, " rgb(255, 255, 255)");
+          return gradient;
+        },
+
+        lineTension: 0,
+      },
+    ],
+  };
 
   const options = {
     responsive: true,
@@ -40,19 +71,25 @@ const Chart = () => {
 
     elements: {
       line: {
-        // tension: 0.8,
+        tension: 0,
       },
     },
+
+    bezierCurve: false,
 
     scales: {
       x: {
         grid: {
-          //   display: false,
+          display: false,
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 6,
         },
       },
       y: {
         grid: {
-          //   display: false,
+          display: true,
         },
       },
     },
@@ -62,70 +99,87 @@ const Chart = () => {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  //   "linear-gradient(180deg, rgb(11, 223, 135) 10%, rgb(255, 255, 255) 80%)",
-  const data = {
-    labels,
-    datasets: [
-      {
-        fill: "start",
-        label: "Dataset 2",
-        data: labels.map(() => faker.number.int({ min: 0, max: 1000 })),
-        borderColor: "rgb(11, 223, 135)",
-        backgroundColor: (context) => {
-          const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-          gradient.addColorStop(0, "rgb(11, 223, 135)");
-          gradient.addColorStop(1, " rgb(255, 255, 255)");
-          return gradient;
-        },
-
-        borderJoinStyle: "bevel",
-        lineTension: 0.1,
-      },
-    ],
-  };
-
   const range = [
-    {
-      title: "All",
-    },
-    {
-      title: "5Y",
-    },
-    {
-      title: "1Y",
-    },
-    {
-      title: "6M",
-    },
+    // {
+    //   title: "All",
+    //   action: () => {
+    //     rangeFunc(10, "years");
+    //   },
+    // },
+    // {
+    //   title: "5Y",
+    //   action: () => {
+    //     rangeFunc(5, "years");
+    //   },
+    // },
+    // {
+    //   title: "1Y",
+    //   action: () => {
+    //     rangeFunc(1, "years");
+    //   },
+    // },
+    // {
+    //   title: "6M",
+    //   action: () => {
+    //     rangeFunc(6, "months");
+    //   },
+    // },
     {
       title: "3M",
+      action: () => {
+        setChartInterval("3mo");
+
+        rangeFunc(3, "months");
+      },
     },
     {
       title: "1M",
+      action: () => {
+        setChartInterval("1mo");
+
+        rangeFunc(1, "months");
+      },
+    },
+    {
+      title: "1W",
+      action: () => {
+        setChartInterval("1wk");
+
+        rangeFunc(1, "weeks");
+      },
+    },
+    {
+      title: "1D",
+      action: () => {
+        setChartInterval("1d");
+
+        rangeFunc(1, "days");
+      },
+    },
+    {
+      title: "1H",
+      action: () => {
+        setChartInterval("1h");
+        rangeFunc(1, "hours");
+      },
     },
   ];
+
+  useEffect(() => {
+    console.log(moment().subtract(12, "months").format("YYYY-MM-DD"));
+  }, []);
   return (
     <div className="">
       <div className="flex items-center w-fit mr-8 ml-auto mb-2 mt-4">
         {range?.map((r) => (
           <div
             key={r.title}
-            className="px-4 py-2 text-[12px] text-gray-600 border-neutral-600 border-[1px] cursor-pointer"
+            className={`${
+              chartInterval?.slice(0, 2).toLowerCase() == r.title.toLowerCase()
+                ? "bg-black-10"
+                : ""
+            } px-4 py-2 text-[12px] text-gray-600  border-neutral-600 border-[1px] cursor-pointer hover:bg-black-10`}
+            onClick={() => r.action()}
           >
             {r.title}
           </div>

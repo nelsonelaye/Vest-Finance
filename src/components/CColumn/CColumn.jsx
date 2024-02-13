@@ -62,6 +62,7 @@ const CColumn = ({ className, value }) => {
         <div className="mb-20">
           <SearchField
             variant="small"
+            page="compare"
             value={symbol}
             className={screenHeight > 300 ? "!absolute top-1 !z-50" : ""}
             handleSelect={(val) => {

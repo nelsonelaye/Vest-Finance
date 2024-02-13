@@ -22,7 +22,7 @@ export const holisticInstance = axios.create({
 
 export const yHInstance = axios.create({
   // Configuration
-  baseURL: process.env.NEXT_PUBLIC_YH_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_YH_URL,
   headers: {
     "content-type": "application/json",
     "X-RapidAPI-Key": process.env.NEXT_PUBLIC_YH_API_KEY,

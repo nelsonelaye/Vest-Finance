@@ -8,6 +8,9 @@ import { usePathname } from "next/navigation";
 import { SearchField } from "../";
 import { useSearchContext } from "@/context/SearchContext";
 import { LuSearch } from "react-icons/lu";
+import UseAnimation from "react-useanimations";
+import searchToX from "react-useanimations/lib/searchToX";
+import "animate.css";
 
 const Header = () => {
   const pathname = usePathname();
@@ -37,7 +40,12 @@ const Header = () => {
           </Link>
         </div>
 
-        {isSearch && <SearchField variant="primary" />}
+        {isSearch && (
+          <SearchField
+            variant="primary"
+            className=" animate__animated animate__fadeInUp"
+          />
+        )}
 
         <div className="flex lg:hidden">
           <button
@@ -83,14 +91,23 @@ const Header = () => {
               setIsSearch(!isSearch);
             }}
           >
-            {isSearch ? (
+            <UseAnimation
+              reverse={isSearch}
+              onClick={() => {
+                setIsSearch(!isSearch);
+              }}
+              size={25}
+              animation={searchToX}
+              className="text-gray-900 font-normal mt-1"
+            />
+            {/* {isSearch ? (
               ""
             ) : (
               <LuSearch
                 className="text-gray-900 font-normal mt-1"
                 fontSize={18}
               />
-            )}
+            )} */}
           </span>
           <Link href="/compare">
             <span className="text-sm font-normal cursor-pointer leading-6 ">

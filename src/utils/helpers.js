@@ -40,3 +40,21 @@ export function formatMetricKey(str) {
     return formattedStr.charAt(0).toUpperCase() + formattedStr.slice(1);
   }
 }
+
+export function getUniqueMonths(dateArray) {
+  const uniqueMonths = [];
+
+  // Iterate through the array and extract the month part of each date
+  dateArray.forEach((item) => {
+    const date = new Date(item.date);
+    const month = date.toLocaleString("default", { month: "long" }); // Get the full month name
+
+    uniqueMonths.push(month);
+
+    // if (!uniqueMonths.includes(month)) {
+    //   uniqueMonths.push(month);
+    // }
+  });
+
+  return uniqueMonths; // Convert Set to Array
+}

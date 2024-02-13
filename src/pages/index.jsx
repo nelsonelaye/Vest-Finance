@@ -7,20 +7,20 @@ export default function Home() {
   const { setIsSearch } = useSearchContext();
 
   return (
-    <>
+    <div className="scene_element scene_element--fadeinleft">
       <Layout>
         <div className="bg-white  px-6 md:pt-14 lg:px-8 ">
           <div className="w-full text-center md:text-left md:w-3/5 py-28 pb-48 ">
-            <h1 className="text-4xl font-bold leading-[70px] tracking-tight text-gray-900 sm:text-6xl">
+            <h1 className="scene_element scene_element--fadeinup text-4xl font-bold leading-[70px] tracking-tight text-gray-900 sm:text-6xl">
               Spot <span className="text-green-100 ">opportunities</span> for
               smarter <span className="">investment</span> decisons.
             </h1>
-            <p className="mt-3 text-base leading-8 text-black-50">
+            <p className="scene_element scene_element--fadeinup mt-3 text-base leading-8 text-black-50">
               {/* Analyse stock data. Find important metrics. Make better
                 investment decisons. */}
               Simplified equity analysis. Real-time insights.
             </p>
-            <div className="flex flex-col gap-3 mt-10 md:flex-row items-center  md:gap-6">
+            <div className="scene_element scene_element--fadeinup flex flex-col gap-3 mt-10 md:flex-row items-center  md:gap-6">
               <button
                 type="button"
                 className="rounded-md bg-green-100 px-8 py-3 text-lg font-medium text-white shadow-sm hover:bg-green-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-60"
@@ -42,6 +42,6 @@ export default function Home() {
           </div>
         </div>
       </Layout>
-    </>
+    </div>
   );
 }

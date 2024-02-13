@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { holisticInstance, yFInstance } from "@/utils/axiosBase";
+import { holisticInstance, yFInstance, yHInstance } from "@/utils/axiosBase";
+import moment from "moment";
 
 export const getStockModules = async (ticker, module) => {
   const res = await yFInstance.get("/markets/stock/modules", {
@@ -75,8 +76,29 @@ export const getIncomeStatement = async (symbol) => {
 
   return res?.data;
 };
+export const getStockHistory = async (symbol, interval) => {
+  const res = await yFInstance.get("/markets/stock/history", {
+    params: {
+      symbol: symbol,
+      interval: interval,
+    },
+  });
 
-// API HOOKS
+  return res?.data;
+};
+export const getPriceHistory = async (symbol) => {
+  const res = await yHInstance.get("/yhfhistorical", {
+    params: {
+      ticker: symbol,
+      sdate: moment().subtract(1, "years").format("YYYY-MM-DD"),
+      edate: moment(new Date()).format("YYYY-MM-DD"),
+    },
+  });
+
+  return res?.data;
+};
+
+////////////////////////////// API HOOKS ///////////////////////////////////////////
 
 export const useGetStats = (ticker) => {
   return useQuery({

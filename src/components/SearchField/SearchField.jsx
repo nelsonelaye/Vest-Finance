@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { searchStock } from "@/services/api/search";
 // import { getStats } from "@/services/api/stock";
 // import { useRouter } from "next/router";
@@ -8,11 +8,11 @@ import { useDebouncedCallback } from "use-debounce";
 import Link from "next/link";
 import styles from "./searchField.module.css";
 import { Loader } from "@mantine/core";
+import "animate.css";
 
-const SearchField = ({ variant, value, className, handleSelect }) => {
+const SearchField = ({ variant, value, className, handleSelect, page }) => {
   const searchParams = useSearchParams();
   const symbol = searchParams.get("ticker");
-  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState(symbol || value || "");
   const [searchResult, setSearchResult] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -33,7 +33,7 @@ const SearchField = ({ variant, value, className, handleSelect }) => {
 
   return (
     <div
-      className={`relative w-full   ${
+      className={` relative w-full   ${
         variant === "small" ? "mx-auto" : "sm:w-[600px]"
       } sm:mx-auto ${className}`}
     >
@@ -69,7 +69,7 @@ const SearchField = ({ variant, value, className, handleSelect }) => {
           className={`${styles.search_result} absolute bg-white w-full flex flex-col h-auto max-h-[500px] overflow-y-auto  px-4 z-50 min-h-14 rounded-[15px] shadow-md`}
         >
           {searchResult?.map((r) =>
-            pathname == "/compare" ? (
+            page == "compare" ? (
               <div
                 key={r.symbol}
                 className="  w-full px-6 py-4 border-b border-neutral-20 font-medium cursor-pointer"
@@ -89,6 +89,9 @@ const SearchField = ({ variant, value, className, handleSelect }) => {
                 <div
                   key={r.symbol}
                   className="  w-full px-6 py-4 border-b border-neutral-20 font-medium cursor-pointer"
+                  onClick={() => {
+                    setSearchResult([]);
+                  }}
                 >
                   <p className="text-sm mb-1">{r.name}</p>
                   <p className="text-[12px] text-black-50 font-medium ">

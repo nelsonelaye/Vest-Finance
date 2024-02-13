@@ -3,8 +3,8 @@ import { CColumn, Layout } from "@/components";
 
 const Compare = () => {
   return (
-    <Layout>
-      <main className="w-10/12 sm:w-4/5 mx-auto">
+    <Layout className="">
+      <main className="scene_element scene_element--fadeinright w-10/12 sm:w-4/5 mx-auto">
         <div className="text-center my-10 mb-20">
           <h2 className="text-5xl font-semibold  w-1/2 mx-auto mb-4">
             Compare between stock metrics and ratios

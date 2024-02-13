@@ -6,6 +6,7 @@ import {
   StockCard,
   NewsItem,
   AllStats,
+  PercentTrend,
 } from "@/components";
 import microsoft from "@/assets/images/microsoft.png";
 import apple from "../../assets/images/apple.png";
@@ -28,11 +29,16 @@ import {
   getCashflowStatement,
   getIncomeStatement,
   getMetrics,
+  getPriceHistory,
   getRatios,
+  getStockHistory,
   getStockModules,
   getVolume,
 } from "@/services/api/stock";
 import { formatCurrency, formatMetric } from "@/utils/helpers";
+import { chartData as chData } from "@/data/chart";
+
+import moment from "moment";
 
 const feature_list = [
   {
@@ -102,10 +108,11 @@ const Search = () => {
   const [incomeStatement, setIncomeStatement] = useState({});
   const [cashflow, setCashflow] = useState({});
   const [balanceSheet, setBalanceSheet] = useState({});
-
+  const [chartData, setChartData] = useState(chData || []);
+  const [chartStartDate, setChartStartDate] = useState();
+  const [chartInterval, setChartInterval] = useState("3mo");
   const params = useParams();
   const symbol = params?.symbol;
-
   // const { data } = useGetStats(symbol);
   // const { data } = useGetFinancialData(symbol);
   // const { data: balanceSheetData } = useGetBalanceSheet(symbol);
@@ -155,6 +162,10 @@ const Search = () => {
     },
   ];
 
+  const handleInterval = (number, string) => {
+    setChartStartDate(moment().subtract(number, string).format("YYYY-MM-DD"));
+  };
+
   const handleStats = () => {
     getStockModules(symbol, "statistics").then((res) => {
       setYStats(res?.body);
@@ -190,13 +201,34 @@ const Search = () => {
 
   useEffect(() => {
     if (symbol) {
-      handleStats();
+      // getStockHistory(symbol, chartInterval).then((res) => {
+      //   setChartData(res.body);
+      //   console.log(res.body);
+      // });
+      // getPriceHistory(symbol).then((res) => {
+      //   setChartData(res);
+      // console.log(res);
+      // });
+      // handleStats();
     }
   }, [symbol]);
 
+  useEffect(() => {
+    console.log(chartInterval);
+
+    if (chartStartDate) {
+      console.log(chartStartDate);
+
+      //  getPriceHistory(symbol).then((res) => {
+      //   setChartData(res);
+      // console.log(res);
+      // });
+    }
+  }, [chartStartDate, chartInterval]);
+
   return (
     <Layout>
-      <div className="w-11/12 sm:w-10/12 my-4 mt-10 mx-auto flex flex-col items-center">
+      <div className="scene_element scene_element--fadeinright w-11/12 sm:w-10/12 my-4 mt-10 mx-auto flex flex-col items-center">
         <section className="hidden w-full  flex-col items-center py-20 mb-12 bg-gradient-to-tr from-white to-black">
           <h1 className="text-xl w-1/2 text-center font-semibold leading-[50px] tracking-tight text-white sm:text-4xl">
             {/* Get real-time data for stocks and ETF assets */}
@@ -216,7 +248,7 @@ const Search = () => {
                 width={50}
                 height={50}
                 alt="apple"
-                className="w-[40px] sm:w-[50px] rounded-full mr-3"
+                className=" hidden w-[40px] sm:w-[50px] rounded-full mr-3"
               />
               <div>
                 <h6 className="text-lg sm:text-2xl font-semibold"> {symbol}</h6>
@@ -236,13 +268,22 @@ const Search = () => {
               </span>
 
               <div className="flex items-center text-green-100 font-medium text-sm sm:text-lg">
-                <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />{" "}
-                {yFinancialData?.["52WeekChange"]?.fmt}
+                <PercentTrend value={yFinancialData?.["52WeekChange"]?.fmt} />
+                {/* <IoTrendingUp className="mr-1 rotate-[-6deg]" fontSize={20} />{" "} */}
+
                 {/* <span className="text-[11px]">%</span> */}
               </div>
             </div>
           </div>
-          <Chart />
+          <Chart
+            values={chartData}
+            setChartInterval={setChartInterval}
+            chartInterval={chartInterval}
+            rangeFunc={(num, str) => {
+              handleInterval(num, str);
+            }}
+          />
+          {/* <EChart data={chartData} /> */}
         </section>
 
         <section className="w-full my-12 sm:my-20 sm:mb-6">

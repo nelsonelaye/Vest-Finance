@@ -5,10 +5,15 @@ export default function Document() {
   return (
     <Html lang="en" dir="ltr">
       <Head />
-      <body className="flex flex-col">
+      <body
+        className=" flex flex-col"
+        onload="document.body.className += ' loaded';"
+      >
+        <div className="background_overlay" />
         {/* <Layout> */}
         <Main />
         {/* </Layout> */}
+
         <NextScript />
       </body>
     </Html>

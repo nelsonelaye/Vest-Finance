@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import bitcoin from "@/assets/images/bitcoin.jpg";
 import { getPreview } from "@/services/api/livePreview";
 import { Skeleton } from "@mantine/core";
+import Link from "next/link";
 
 const NewsItem = ({ data }) => {
   const [image, setImage] = useState("");
@@ -24,12 +25,15 @@ const NewsItem = ({ data }) => {
       </Skeleton>
 
       <span className="text-sm text-neutral-100 ">{data?.source}</span>
-      <h4 className="text-lg font-medium">
-        {data?.title
-          ? data.title.substring(0, 60)
-          : " Apple Inc. stock falls Monday, underperforms market"}
-        {"..."}
-      </h4>
+      <a href={data?.link} target="_blank">
+        <h4 className="text-lg font-medium">
+          {data?.title
+            ? data.title.substring(0, 60)
+            : " Apple Inc. stock falls Monday, underperforms market"}
+          {"..."}
+        </h4>
+      </a>
+
       <p className="hidden text-neutral-100 font-light">
         {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ".substring(
           0,
