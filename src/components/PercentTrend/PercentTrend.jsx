@@ -1,11 +1,11 @@
 import React from "react";
 import { IoTrendingDown, IoTrendingUp } from "react-icons/io5";
 
-const PercentTrend = ({ value, trend, className }) => {
+const PercentTrend = ({ value, className }) => {
   return (
     <div
       className={`flex items-center ${
-        trend === "up" ? "text-green-100 " : "text-red-500"
+        value && value[0] === "-" ? " text-red-500" : " text-green-100"
       } ${className} font-bold text-sm sm:text-xl`}
     >
       {value && value[0] === "-" ? (
@@ -15,7 +15,7 @@ const PercentTrend = ({ value, trend, className }) => {
       )}
 
       {value}
-      <span className="">%</span>
+      {/* <span className="">%</span> */}
     </div>
   );
 };

@@ -58,9 +58,15 @@ const SearchField = ({ variant, value, className, handleSelect }) => {
         value={searchQuery}
       />
 
-      {searchQuery.length > 1 && searchResult?.length > 0 ? (
+      {isSearching ? (
         <div
-          className={`${styles.search_result} absolute bg-white w-full flex flex-col h-auto max-h-[500px] overflow-y-auto  px-4 z-50 rounded-[15px] shadow-md`}
+          className={`${styles.search_result} absolute bg-white w-full flex flex-col justify-center h-auto  py-2 px-4 z-50 min-h-14 rounded-[15px] shadow-md mt-4`}
+        >
+          <Loader color="#000" />
+        </div>
+      ) : searchQuery.length > 1 && searchResult?.length > 0 ? (
+        <div
+          className={`${styles.search_result} absolute bg-white w-full flex flex-col h-auto max-h-[500px] overflow-y-auto  px-4 z-50 min-h-14 rounded-[15px] shadow-md`}
         >
           {searchResult?.map((r) =>
             pathname == "/compare" ? (
@@ -93,9 +99,11 @@ const SearchField = ({ variant, value, className, handleSelect }) => {
             )
           )}
         </div>
-      ) : searchQuery.length > 1 && searchResult?.length === 0 ? (
-        <div className="absolute  bg-white shadow-md w-full rounded-[15px] min-h-20 flex items-center px-6 text-sm text-gray-600 font-medium ">
-          {isSearching ? <Loader fontSize={10} color="#000000" /> : "No result"}
+      ) : searchQuery.length > 1 && searchResult == undefined ? (
+        <div
+          className={`${styles.search_result} absolute bg-white w-full flex flex-col justify-center  h-auto   px-4  py-2 z-50 min-h-14 rounded-[15px] shadow-md`}
+        >
+          Try a different value
         </div>
       ) : (
         ""

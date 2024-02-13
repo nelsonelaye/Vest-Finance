@@ -1,12 +1,12 @@
 import { CColumn, Layout } from "@/components";
-import ColumnData from "@/components/CColumn/ColumnData";
+// import ColumnData from "@/components/CColumn/ColumnData";
 
 const Compare = () => {
   return (
     <Layout>
       <main className="w-10/12 sm:w-4/5 mx-auto">
         <div className="text-center my-10 mb-20">
-          <h2 className="text-5xl font-medium  w-1/2 mx-auto mb-4">
+          <h2 className="text-5xl font-semibold  w-1/2 mx-auto mb-4">
             Compare between stock metrics and ratios
           </h2>
           <span className="text-black-50">

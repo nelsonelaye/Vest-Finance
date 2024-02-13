@@ -33,7 +33,10 @@ export function formatPercentage(value) {
 
 export function formatMetricKey(str) {
   // Insert spaces before capital letters (except the first letter)
-  const formattedStr = str.replace(/([a-z])([A-Z])/g, "$1 $2");
-  // Convert the string to title case
-  return formattedStr.charAt(0).toUpperCase() + formattedStr.slice(1);
+
+  if (str) {
+    const formattedStr = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+    // Convert the string to title case
+    return formattedStr.charAt(0).toUpperCase() + formattedStr.slice(1);
+  }
 }

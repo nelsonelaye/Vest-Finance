@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiInstance, holisticInstance, yFInstance } from "@/utils/axiosBase";
+import { holisticInstance, yFInstance } from "@/utils/axiosBase";
 
 export const getStockModules = async (ticker, module) => {
   const res = await yFInstance.get("/markets/stock/modules", {
@@ -75,6 +75,8 @@ export const getIncomeStatement = async (symbol) => {
 
   return res?.data;
 };
+
+// API HOOKS
 
 export const useGetStats = (ticker) => {
   return useQuery({

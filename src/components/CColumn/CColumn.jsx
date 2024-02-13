@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { PercentTrend, SearchField } from "..";
-import Image from "next/image";
+// import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 // import microsoft from "@/assets/images/microsoft.png";
-import nvidia from "@/assets/images/nvidia.png";
+// import nvidia from "@/assets/images/nvidia.png";
 import Link from "next/link";
 import CStats from "./CStats";
 import {
@@ -26,43 +26,33 @@ const CColumn = ({ className, value }) => {
   const [volume, setVolume] = useState();
 
   const handleStockSelect = (val) => {
-    if (val) {
-      getStockModules(val, "statistics").then((res) => {
-        setYFData((prev) => {
-          return { prev, ...res?.body };
-        });
-      });
-      getStockModules(val, "financial-data").then((res) => {
-        setYFData((prev) => {
-          return { prev, ...res?.body };
-        });
-      });
-      getMetrics(val).then((res) => {
-        if (res?.length > 0) {
-          setHolData((prev) => {
-            return { prev, ...res[0] };
-          });
-          // setMetrics(res[0]);
-        }
-      });
-      getVolume(val).then((res) => {
-        setVolume(res[0]?.volume);
-      });
-
-      getRatios(val).then((res) => {
-        if (res?.length > 0) {
-          setHolData((prev) => {
-            return { prev, ...res[0] };
-          });
-          // setRatios(res[0]);
-        }
-      });
-    }
+    // if (val !== "" || val !== undefined) {
+    //   getStockModules(val, "statistics").then((res) => {
+    //     setYFData({ ...yFData, ...res?.body });
+    //   });
+    //   getStockModules(val, "financial-data").then((res) => {
+    //     setYFData({ ...yFData, ...res?.body });
+    //   });
+    //   getMetrics(val).then((res) => {
+    //     if (res?.length > 0) {
+    //       setHolData({ holData, ...res[0] });
+    //       // setMetrics(res[0]);
+    //     }
+    //   });
+    //   getVolume(val).then((res) => {
+    //     setVolume(res[0]?.volume);
+    //   });
+    //   getRatios(val).then((res) => {
+    //     if (res?.length > 0) {
+    //       setHolData({ holData, ...res[0] });
+    //     }
+    //   });
+    // }
   };
 
   useEffect(() => {
     if (symbol) {
-      handleStockSelect(value);
+      handleStockSelect(symbol);
     }
   }, [symbol]);
 
@@ -73,7 +63,7 @@ const CColumn = ({ className, value }) => {
           <SearchField
             variant="small"
             value={symbol}
-            className={screenHeight > 300 ? "!sticky top-1 z-50" : ""}
+            className={screenHeight > 300 ? "!absolute top-1 !z-50" : ""}
             handleSelect={(val) => {
               setSymbol(val);
               handleStockSelect(val);
@@ -102,7 +92,7 @@ const CColumn = ({ className, value }) => {
               className="justify-center mb-5"
             />
 
-            <Link href={`/search/${symbol}`} className="text-blue-500">
+            <Link href={`/search/${symbol}`} className="text-blue-500 ">
               <span className="flex items-center justify-center">
                 Learn more <IoIosArrowForward className="ml-1 " />
               </span>
@@ -113,7 +103,7 @@ const CColumn = ({ className, value }) => {
         <section className="">
           <CStats
             title="Market cap."
-            value={formatMetric(holData?.marketCap)}
+            value={formatMetric(holData?.marketCap) || "N/A"}
           />
           <CStats title="Volume" value={formatMetric(volume)} />
           <CStats

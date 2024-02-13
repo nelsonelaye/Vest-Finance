@@ -20,13 +20,13 @@ export const holisticInstance = axios.create({
   },
 });
 
-export const apiInstance = axios.create({
+export const yHInstance = axios.create({
   // Configuration
-  baseURL: process.env.NEXT_PUBLIC_STOCK_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_YH_API_URL,
   headers: {
     "content-type": "application/json",
-    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_HOLISTIC_STOCK_API_KEY,
-    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_HOLISTIC_STOCK_HOST,
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_YH_API_KEY,
+    "X-RapidAPI-Host": process.env.NEXT_PUBLIC_YH_HOST,
   },
 });
 

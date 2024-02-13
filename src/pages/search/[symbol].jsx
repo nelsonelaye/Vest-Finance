@@ -219,10 +219,7 @@ const Search = () => {
                 className="w-[40px] sm:w-[50px] rounded-full mr-3"
               />
               <div>
-                <h6 className="text-lg sm:text-2xl font-semibold">
-                  {" "}
-                  Apple Inc.
-                </h6>
+                <h6 className="text-lg sm:text-2xl font-semibold"> {symbol}</h6>
                 <span className="text-sm sm:text-[14px] text-gray-500 font-medium">
                   {symbol}
                 </span>
