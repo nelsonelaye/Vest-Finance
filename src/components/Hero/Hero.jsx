@@ -16,7 +16,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-col gap-3 mt-10 md:flex-row items-center  md:gap-6">
           <Link
-            href="/search"
+            href="#"
             className="rounded-md bg-green-100 px-8 py-3 text-lg font-medium text-white shadow-sm hover:bg-green-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-60"
           >
             Get started
