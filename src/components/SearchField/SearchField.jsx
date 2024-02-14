@@ -72,7 +72,7 @@ const SearchField = ({ variant, value, className, handleSelect, page }) => {
             page == "compare" ? (
               <div
                 key={r.symbol}
-                className="  w-full px-6 py-4 border-b border-neutral-20 font-medium cursor-pointer"
+                className="  w-full px-6 py-4 border-b bg-white z-50 border-neutral-20 font-medium cursor-pointer"
                 onClick={() => {
                   setSearchQuery(r.symbol);
                   handleSelect(r.symbol);

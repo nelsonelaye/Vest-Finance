@@ -20,7 +20,10 @@ import {
 
 const CColumn = ({ className, value }) => {
   const [symbol, setSymbol] = useState(value || "");
-  const [yFData, setYFData] = useState({});
+  // const [yFData, setYFData] = useState({});
+  const [yStats, setYStats] = useState({});
+  const [yData, setYData] = useState({});
+  const [holMetrics, setHolMetrics] = useState({});
   const [holData, setHolData] = useState({});
   const [volume, setVolume] = useState();
   const [scroll, setScroll] = useState(false);
@@ -37,15 +40,16 @@ const CColumn = ({ className, value }) => {
   const handleStockSelect = (val) => {
     if (val !== "" || val !== undefined) {
       getStockModules(val, "statistics").then((res) => {
-        setYFData({ ...yFData, ...res?.body });
+        setYStats(res?.body);
       });
+
       getStockModules(val, "financial-data").then((res) => {
-        setYFData({ ...yFData, ...res?.body });
+        setYData(res?.body);
       });
       getMetrics(val).then((res) => {
         if (res?.length > 0) {
-          setHolData({ holData, ...res[0] });
-          // setMetrics(res[0]);
+          // setHolData({ ...holData, ...res[0] });
+          setHolMetrics(res[0]);
         }
       });
       getVolume(val).then((res) => {
@@ -53,7 +57,7 @@ const CColumn = ({ className, value }) => {
       });
       getRatios(val).then((res) => {
         if (res?.length > 0) {
-          setHolData({ holData, ...res[0] });
+          setHolData({ ...holData, ...res[0] });
         }
       });
     }
@@ -67,13 +71,15 @@ const CColumn = ({ className, value }) => {
 
   return (
     <>
-      <section className={`w-2/3 sm:1/3 md:w-1/5 mx-auto mb-28 ${className}`}>
+      <section
+        className={`w-2/3 sm:1/3 md:w-1/5 mx-auto mb-28 !z-10 ${className}`}
+      >
         <div className="mb-20">
           <SearchField
             variant="small"
             page="compare"
             value={symbol}
-            className={scroll ? "!sticky top-4 !z-50" : ""}
+            className={scroll ? "!sticky top-4 !z-40" : "!z-10"}
             handleSelect={(val) => {
               setSymbol(val);
               handleStockSelect(val);
@@ -94,11 +100,11 @@ const CColumn = ({ className, value }) => {
 
           <div className="text-center ">
             <h2 className=" text-lg sm:text-2xl font-semibold mb-3">
-              ${formatCurrency(yFData?.currentPrice?.fmt)}
+              ${formatCurrency(yData?.currentPrice?.fmt)}
             </h2>
 
             <PercentTrend
-              value={yFData?.["52WeekChange"]?.fmt}
+              value={yStats?.["52WeekChange"]?.fmt}
               className="justify-center mb-5"
             />
 
@@ -113,30 +119,24 @@ const CColumn = ({ className, value }) => {
         <section className="">
           <CStats
             title="Market cap."
-            value={formatMetric(holData?.marketCap) || "N/A"}
+            value={formatMetric(holMetrics?.marketCap) || "N/A"}
           />
           <CStats title="Volume" value={formatMetric(volume)} />
-          <CStats
-            title="YTD"
-            value={yFData?.ytdReturn && yFData?.ytdReturn[0]?.fmt}
-          />
-          <CStats title="P/E" value={yFData?.priceToBook?.fmt} />
-          <CStats title="PEG" value={yFData?.pegRatio?.fmt} />
-          <CStats title="Price/Book" value={yFData?.priceToBook?.fmt} />
+          <CStats title="YTD" value={yStats?.["52WeekChange"]?.fmt} />
+          <CStats title="P/E" value={yStats?.forwardPE?.fmt} />
+          <CStats title="PEG" value={yStats?.pegRatio?.fmt} />
+          <CStats title="Price/Book" value={yStats?.priceToBook?.fmt} />
           <CStats
             title="Dividend yield"
             value={formatPercentage(holData?.dividendYield)}
           />
 
-          <CStats title="Quick ratio" value={yFData?.quickRatio?.fmt} />
-          <CStats title="Current ratio" value={yFData?.currentRatio?.fmt} />
-          <CStats title="Debt/Equity" value={yFData?.debtToEquity?.fmt} />
-          <CStats title="Return on asset" value={yFData?.returnOnAssets?.fmt} />
-          <CStats
-            title="Return on equity"
-            value={yFData?.returnOnEquity?.fmt}
-          />
-          <CStats title="Earnings growth" value={yFData?.earningsGrowth?.fmt} />
+          <CStats title="Quick ratio" value={yData?.quickRatio?.fmt} />
+          <CStats title="Current ratio" value={yData?.currentRatio?.fmt} />
+          <CStats title="Debt/Equity" value={yData?.debtToEquity?.fmt} />
+          <CStats title="Return on asset" value={yData?.returnOnAssets?.fmt} />
+          <CStats title="Return on equity" value={yData?.returnOnEquity?.fmt} />
+          <CStats title="Earnings growth" value={yData?.earningsGrowth?.fmt} />
         </section>
 
         <Link href={`/search/${symbol}`} className="text-blue-500">

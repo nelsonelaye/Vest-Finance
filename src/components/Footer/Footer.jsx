@@ -8,7 +8,11 @@ const Footer = () => {
       </aside>
 
       <aside>
-        <a href="#" className="underline">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfle0ZnG3SEvUmnmpEq8AZB7um43xwtluFSfWI3KYQona5FSA/viewform"
+          target="_blank"
+          className="underline"
+        >
           <span>Feedback</span>
         </a>
       </aside>
