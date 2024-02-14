@@ -1,5 +1,6 @@
 // import Layout from "@/components/Layout/Layout";
 import { Html, Head, Main, NextScript } from "next/document";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Document() {
   return (
@@ -7,6 +8,7 @@ export default function Document() {
       <Head />
       <body className=" " onload="document.body.className += ' loaded';">
         <div className="background_overlay" />
+        <Analytics />
         {/* <Layout> */}
         <Main />
         {/* </Layout> */}
