@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { MantineProvider } from "@mantine/core";
 import SearchProvider from "@/context/SearchContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 
 // core styles are required for all packages
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }) {
       <SearchProvider>
         <MantineProvider>
           <Component {...pageProps} />
+          <Analytics />
         </MantineProvider>
       </SearchProvider>
     </QueryClientProvider>
