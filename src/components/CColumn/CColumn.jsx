@@ -24,7 +24,18 @@ const CColumn = ({ className, value }) => {
   const [yFData, setYFData] = useState({});
   const [holData, setHolData] = useState({});
   const [volume, setVolume] = useState();
+  const [scroll, setScroll] = useState(false);
 
+  const getScroll = () => {
+    const check = window.scrollY;
+    if (check >= 300) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  };
+
+  window.addEventListener("scroll", getScroll);
   const handleStockSelect = (val) => {
     // if (val !== "" || val !== undefined) {
     //   getStockModules(val, "statistics").then((res) => {
@@ -64,7 +75,7 @@ const CColumn = ({ className, value }) => {
             variant="small"
             page="compare"
             value={symbol}
-            className={screenHeight > 300 ? "!absolute top-1 !z-50" : ""}
+            className={scroll ? "!sticky top-4 !z-50" : ""}
             handleSelect={(val) => {
               setSymbol(val);
               handleStockSelect(val);

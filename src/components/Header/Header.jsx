@@ -7,32 +7,48 @@ import logo from "@/assets/images/logo.svg";
 import { usePathname } from "next/navigation";
 import { SearchField } from "../";
 import { useSearchContext } from "@/context/SearchContext";
-import { LuSearch } from "react-icons/lu";
+
 import UseAnimation from "react-useanimations";
 import searchToX from "react-useanimations/lib/searchToX";
 import "animate.css";
 
 const Header = () => {
   const pathname = usePathname();
-
+  const screenHeight = typeof window !== "undefined" && window.scrollY;
   const { isSearch, setIsSearch } = useSearchContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname == "/search") {
+    if (pathname?.includes("search")) {
       setIsSearch(true);
     } else {
       setIsSearch(false);
     }
-  }, []);
+  }, [pathname]);
 
+  const [scroll, setScroll] = useState(false);
+
+  const getScroll = () => {
+    const check = window.scrollY;
+    if (check >= 100) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  };
+
+  window.addEventListener("scroll", getScroll);
   return (
-    <header className="z-50">
+    <header
+      className={`z-50 bg-white ${
+        isSearch && scroll ? "shadow fixed w-full top-0" : ""
+      }`}
+    >
       <nav
-        className="flex items-center justify-between pr-4 py-0 sm:p-6 sm:py-3 lg:px-8"
+        className="flex items-center justify-between pr-4 py-0 sm:p-6 sm:py-3 md:px-8"
         aria-label="Global"
       >
-        <div className="flex z-10 lg:flex-1">
+        <div className="flex z-10 md:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Vest Finance</span>
 
@@ -43,11 +59,11 @@ const Header = () => {
         {isSearch && (
           <SearchField
             variant="primary"
-            className=" animate__animated animate__fadeInUp"
+            className=" animate__animated animate__fadeInUp !hidden sm:!block "
           />
         )}
 
-        <div className="flex lg:hidden">
+        <div className="flex md:hidden">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -73,20 +89,9 @@ const Header = () => {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-x-8">
-          <Link
-            href="#"
-            className={`${
-              pathname == "/search" ? "!text-green-100" : ""
-            } hidden text-sm font-normal leading-6 text-gray-900`}
-          >
-            Find stock{" "}
-            <span aria-hidden="true" className="">
-              &rarr;
-            </span>
-          </Link>
+        <div className="hidden md:flex md:flex-1 md:justify-end gap-x-8">
           <span
-            className="text-sm font-normal cursor-pointer leading-6 text-gray-900"
+            className="text-sm font-normal cursor-pointer text-gray-900"
             onClick={() => {
               setIsSearch(!isSearch);
             }}
@@ -124,7 +129,7 @@ const Header = () => {
       </nav>
 
       {/* <!--- Mobile menu, show/hide based on menu open state. --> */}
-      {isSidebarOpen && <Sidebar />}
+      {isSidebarOpen && <Sidebar setIsSidebarOpen={setIsSidebarOpen} />}
     </header>
   );
 };

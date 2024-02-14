@@ -1,23 +1,22 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import logo from "@/assets/images/logo.svg";
+import { SearchField } from "..";
 
 const Sidebar = ({ setIsSidebarOpen }) => {
   return (
     <div className="lg:hidden" role="dialog" aria-modal="true">
       {/* <!-- Background backdrop, show/hide based on slide-over state  --> */}
       <div className="fixed inset-0 z-50"></div>
-      <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+      <div className="scene_element scene_element--fadeinright  fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div className="flex items-center justify-between">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <Image
-              className="h-8 w-auto"
-              width={32}
-              height={32}
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-            />
-          </a>
+          <Link href="/" className=" ml-[-30px]">
+            <span className="sr-only">Vest Finance</span>
+
+            <Image src={logo} width={200} height={30} alt="vest finance" />
+          </Link>
+
           <button
             type="button"
             className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -45,37 +44,35 @@ const Sidebar = ({ setIsSidebarOpen }) => {
         <div className="mt-6 flow-root">
           <div className="-my-6 divide-y divide-gray-500/10">
             <div className="space-y-2 py-6">
-              <a
-                href="#"
+              <SearchField variant="primary" className=" mb-4" />
+              <Link
+                href="/compare"
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                }}
                 className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
-                Product
+                Compare
+              </Link>
+              <a
+                href="#"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-neutral-50 hover:bg-gray-50"
+              >
+                Advisory
               </a>
               <a
                 href="#"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-neutral-50 hover:bg-gray-50"
               >
-                Features
-              </a>
-              <a
-                href="#"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-              >
-                Marketplace
-              </a>
-              <a
-                href="#"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-              >
-                Company
+                Learn
               </a>
             </div>
             <div className="py-6">
               <a
                 href="#"
-                className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                className="-mx-3  block rounded-lg px-3 py-2.5 text-base font-medium underline leading-7 text-gray-900 hover:bg-gray-50"
               >
-                Log in
+                <span>Feedback</span>
               </a>
             </div>
           </div>

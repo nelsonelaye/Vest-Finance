@@ -6,11 +6,11 @@ const Compare = () => {
     <Layout className="">
       <main className="scene_element scene_element--fadeinright w-10/12 sm:w-4/5 mx-auto">
         <div className="text-center my-10 mb-20">
-          <h2 className="text-5xl font-semibold  w-1/2 mx-auto mb-4">
+          <h2 className="w-full text-2xl md:text-5xl font-semibold  lg:w-1/2 mx-auto mb-1 md:mb-4">
             Compare between stock metrics and ratios
           </h2>
           <span className="text-black-50">
-            Lorem ipsum lorem ipsum lorem ipsum lorem ipsum.
+            Decide on what to invest in faster.
           </span>
         </div>
         <section className="w-full flex justify-evenly  gap-6 md:justify-center md:gap-0">

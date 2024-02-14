@@ -8,7 +8,7 @@ const AllStats = ({ yFData, holData }) => {
   // console.log(data);
 
   return (
-    <div className="w-10/12 mx-auto grid grid-cols-3 divide-x-2 gap-x-4 ">
+    <div className="w-full md:w-10/12 mx-auto md:grid grid-cols-3 md:divide-x-2 md:gap-x-4 ">
       <Stats title="Price/Book" value={yFData?.priceToBook?.fmt} />
       <Stats title="Forward EPS" value={yFData?.forwardEps?.fmt} />
       <Stats title="Trailiing EPS" value={yFData?.trailingEps?.fmt} />

@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "www.investors.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+        port: "",
+      },
     ],
   },
 };

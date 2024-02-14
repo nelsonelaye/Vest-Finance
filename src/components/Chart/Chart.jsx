@@ -45,7 +45,7 @@ const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
         borderColor: "rgb(11, 223, 135)",
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
           gradient.addColorStop(0, "rgb(11, 223, 135)");
           gradient.addColorStop(1, " rgb(255, 255, 255)");
           return gradient;
@@ -170,7 +170,7 @@ const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
   }, []);
   return (
     <div className="">
-      <div className="flex items-center w-fit mr-8 ml-auto mb-2 mt-4">
+      <div className="hidden md:flex items-center w-fit mr-8 ml-auto mb-2 mt-4">
         {range?.map((r) => (
           <div
             key={r.title}

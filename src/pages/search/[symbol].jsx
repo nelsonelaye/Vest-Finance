@@ -17,7 +17,6 @@ import pfizer from "@/assets/images/pfizer.jpg";
 import voo from "@/assets/images/s&p.png";
 import { Accordion } from "@mantine/core";
 import Image from "next/image";
-import { IoTrendingUp } from "react-icons/io5";
 import { useParams } from "next/navigation";
 import IStatementTable from "@/components/Tables/IStatementTable";
 import BSheetTable from "@/components/Tables/BSheetTable";
@@ -130,6 +129,32 @@ const Search = () => {
     speed: 500,
     autoplaySpeed: 3000,
     cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const key_stats = [
@@ -229,17 +254,6 @@ const Search = () => {
   return (
     <Layout>
       <div className="scene_element scene_element--fadeinright w-11/12 sm:w-10/12 my-4 mt-10 mx-auto flex flex-col items-center">
-        <section className="hidden w-full  flex-col items-center py-20 mb-12 bg-gradient-to-tr from-white to-black">
-          <h1 className="text-xl w-1/2 text-center font-semibold leading-[50px] tracking-tight text-white sm:text-4xl">
-            {/* Get real-time data for stocks and ETF assets */}
-            Search and analyse equities with fundamental metrics and data.
-          </h1>
-          <p className="hidden mt-2 text-lg leading-8 text-gray-600">
-            Search and analyse equities with fundamental metrics and data.
-          </p>
-          <SearchField />
-        </section>
-
         <section className="w-full">
           <div className="w-full flex justify-between mb-5 px-6">
             <div className="flex items-center">
@@ -286,15 +300,19 @@ const Search = () => {
           {/* <EChart data={chartData} /> */}
         </section>
 
-        <section className="w-full my-12 sm:my-20 sm:mb-6">
-          <h3 className="text-[40px] font-semibold text-center mb-20">
+        <section className="w-full my-6 md:my-20 md:mb-6">
+          <h3 className="md:text-[40px] mb-8 font-semibold text-center md:mb-20">
             Key Statistics
           </h3>
-          <div className="w-full flex items-center justify-around mb-20">
+          <div className="w-full flex items-center justify-around mb-10 md:mb-20">
             {key_stats?.map((stat) => (
               <div key={stat?.title} className="text-center">
-                <h6 className="text-[28px] font-semibold">{stat?.value}</h6>
-                <span className="text-base text-neutral-80">{stat?.title}</span>
+                <h6 className="text-xl md:text-[28px] font-semibold">
+                  {stat?.value}
+                </h6>
+                <span className="text-sm md:text-base text-neutral-80">
+                  {stat?.title}
+                </span>
               </div>
             ))}
           </div>
@@ -306,7 +324,7 @@ const Search = () => {
           />
         </section>
 
-        <section className="w-10/12 mx-auto my-6 sm:my-10 mt-6">
+        <section className="w-10/12 mx-auto my-3 md:my-10 md:mt-6">
           <h3>Financial statements</h3>
           <Accordion>
             {financial_documents?.map(({ title, component }) => (

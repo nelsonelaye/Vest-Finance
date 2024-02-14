@@ -116,7 +116,7 @@ body {
 }
 
 .scene_element {
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   transition-timing-function: linear;
   animation-fill-mode: both;
 }
