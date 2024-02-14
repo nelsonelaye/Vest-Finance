@@ -69,7 +69,8 @@ const Sidebar = ({ setIsSidebarOpen }) => {
             </div>
             <div className="py-6">
               <a
-                href="#"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfle0ZnG3SEvUmnmpEq8AZB7um43xwtluFSfWI3KYQona5FSA/viewform"
+                target="_blank"
                 className="-mx-3  block rounded-lg px-3 py-2.5 text-base font-medium underline leading-7 text-gray-900 hover:bg-gray-50"
               >
                 <span>Feedback</span>
