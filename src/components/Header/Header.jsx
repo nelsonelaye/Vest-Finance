@@ -28,7 +28,7 @@ const Header = () => {
   const [scroll, setScroll] = useState(false);
 
   const getScroll = () => {
-    const check = window.scrollY;
+    const check = typeof window !== "undefined" && window.scrollY;
     if (check >= 100) {
       setScroll(true);
     } else {
@@ -36,7 +36,9 @@ const Header = () => {
     }
   };
 
-  window.addEventListener("scroll", getScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", getScroll);
+  }, []);
   return (
     <header
       className={`z-50 bg-white ${

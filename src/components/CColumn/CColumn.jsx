@@ -26,7 +26,7 @@ const CColumn = ({ className, value }) => {
   const [scroll, setScroll] = useState(false);
 
   const getScroll = () => {
-    const check = window.scrollY;
+    const check = typeof window !== "undefined" && window.scrollY;
     if (check >= 300) {
       setScroll(true);
     } else {
@@ -34,7 +34,6 @@ const CColumn = ({ className, value }) => {
     }
   };
 
-  window.addEventListener("scroll", getScroll);
   const handleStockSelect = (val) => {
     if (val !== "" || val !== undefined) {
       getStockModules(val, "statistics").then((res) => {
