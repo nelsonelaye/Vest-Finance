@@ -1,11 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { useSearchContext } from "@/context/SearchContext";
 import { Layout } from "@/components";
 
 export default function Home() {
-  const { setIsSearch } = useSearchContext();
-
   return (
     <div className="scene_element scene_element--fadeinleft">
       <Layout>

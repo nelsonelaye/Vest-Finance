@@ -1,12 +1,9 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import bitcoin from "@/assets/images/bitcoin.jpg";
-import { getPreview } from "@/services/api/livePreview";
+import React, { useState } from "react";
+
 import { Skeleton } from "@mantine/core";
-import Link from "next/link";
 
 const NewsItem = ({ data }) => {
-  const [image, setImage] = useState("");
+  const [image] = useState("");
   // useEffect(() => {
   //   getPreview(data?.link).then((res) => {
   //     setImage(res?.image);
@@ -16,7 +13,7 @@ const NewsItem = ({ data }) => {
     <div className=" max-w-[320px]  flex flex-col gap-2">
       <Skeleton visible={image === ""} className="mb-2" animate>
         <img
-          src={image !== "" ? image : bitcoin}
+          src={image}
           width={150}
           height={150}
           alt="finanial news"

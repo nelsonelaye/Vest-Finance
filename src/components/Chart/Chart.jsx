@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,10 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+
 import moment from "moment";
-import { getUniqueMonths } from "@/utils/helpers";
-import { cData } from "@/data/cdata";
 
 const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
   ChartJS.register(
@@ -28,8 +26,8 @@ const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
     Tooltip
   );
 
-  const labels = Object.keys(cData).map((key) =>
-    moment(cData[key]?.date, "DD-MM-YYYY").format("MMMM")
+  const labels = Object.keys(values).map((key) =>
+    moment(values[key]?.date, "DD-MM-YYYY").format("MMMM")
   );
   // const labels = values?.map((v) => moment(v?.date).format("MMMM"));
   // const labels = getUniqueMonths(values);
@@ -40,7 +38,7 @@ const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
       {
         fill: "start",
         label: "Dataset 2",
-        data: Object.keys(cData).map((key) => cData[key]?.close),
+        data: Object.keys(values).map((key) => values[key]?.close),
         // data: values.map((v) => v?.close),
         borderColor: "rgb(11, 223, 135)",
         backgroundColor: (context) => {
@@ -165,9 +163,6 @@ const Chart = ({ values, setChartInterval, chartInterval, rangeFunc }) => {
     },
   ];
 
-  useEffect(() => {
-    console.log(moment().subtract(12, "months").format("YYYY-MM-DD"));
-  }, []);
   return (
     <div className="">
       <div className="hidden md:flex items-center w-fit mr-8 ml-auto mb-2 mt-4">

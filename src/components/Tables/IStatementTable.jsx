@@ -1,5 +1,5 @@
 import React from "react";
-import ITable from "./Table";
+
 import { Table } from "@mantine/core";
 // import { incomeStatementData as data} from "@/data/holistic";
 import { formatMetric, formatMetricKey } from "@/utils/helpers";

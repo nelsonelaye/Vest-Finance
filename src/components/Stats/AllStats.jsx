@@ -1,12 +1,8 @@
-import { stats as statsData, financials } from "@/data/data";
 import React from "react";
 import Stats from "./Stats";
-import { data } from "@/data/yahoo";
-import { data as hData } from "@/data/holistic";
-import { formatMetric, formatPercentage } from "@/utils/helpers";
-const AllStats = ({ yFData, holData }) => {
-  // console.log(data);
 
+import { formatPercentage } from "@/utils/helpers";
+const AllStats = ({ yFData, holData }) => {
   return (
     <div className="w-full md:w-10/12 mx-auto md:grid grid-cols-3 md:divide-x-2 md:gap-x-4 ">
       <Stats title="Price/Book" value={yFData?.priceToBook?.fmt} />

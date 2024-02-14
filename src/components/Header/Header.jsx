@@ -14,7 +14,6 @@ import "animate.css";
 
 const Header = () => {
   const pathname = usePathname();
-  const screenHeight = typeof window !== "undefined" && window.scrollY;
   const { isSearch, setIsSearch } = useSearchContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Chart,
   Layout,
-  SearchField,
   StockCard,
   NewsItem,
   AllStats,
@@ -28,14 +27,13 @@ import {
   getCashflowStatement,
   getIncomeStatement,
   getMetrics,
-  getPriceHistory,
   getRatios,
   getStockHistory,
   getStockModules,
   getVolume,
 } from "@/services/api/stock";
 import { formatCurrency, formatMetric } from "@/utils/helpers";
-import { chartData as chData } from "@/data/chart";
+// import { chartData as chData } from "@/data/chart";
 
 import moment from "moment";
 
@@ -107,17 +105,11 @@ const Search = () => {
   const [incomeStatement, setIncomeStatement] = useState({});
   const [cashflow, setCashflow] = useState({});
   const [balanceSheet, setBalanceSheet] = useState({});
-  const [chartData, setChartData] = useState(chData || []);
-  const [chartStartDate, setChartStartDate] = useState();
+  const [chartData, setChartData] = useState([]);
+  const [setChartStartDate] = useState();
   const [chartInterval, setChartInterval] = useState("3mo");
   const params = useParams();
   const symbol = params?.symbol;
-  // const { data } = useGetStats(symbol);
-  // const { data } = useGetFinancialData(symbol);
-  // const { data: balanceSheetData } = useGetBalanceSheet(symbol);
-  // const { data } = useGetCashflowStatement(symbol);
-  // const { data } = useGetIncomeStatement(symbol);
-  // const { data } = useGetNews(symbol);
 
   const sliderSettings = {
     dots: false,
@@ -226,30 +218,21 @@ const Search = () => {
 
   useEffect(() => {
     if (symbol) {
-      // getStockHistory(symbol, chartInterval).then((res) => {
-      //   setChartData(res.body);
-      //   console.log(res.body);
-      // });
-      // getPriceHistory(symbol).then((res) => {
-      //   setChartData(res);
-      // console.log(res);
-      // });
-      // handleStats();
+      getStockHistory(symbol, chartInterval).then((res) => {
+        setChartData(res.body);
+      });
+
+      handleStats();
     }
   }, [symbol]);
 
   useEffect(() => {
-    console.log(chartInterval);
-
-    if (chartStartDate) {
-      console.log(chartStartDate);
-
-      //  getPriceHistory(symbol).then((res) => {
-      //   setChartData(res);
-      // console.log(res);
-      // });
+    if (chartInterval) {
+      getStockHistory(symbol, chartInterval).then((res) => {
+        setChartData(res.body);
+      });
     }
-  }, [chartStartDate, chartInterval]);
+  }, [chartInterval]);
 
   return (
     <Layout>

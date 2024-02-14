@@ -20,7 +20,6 @@ import {
 
 const CColumn = ({ className, value }) => {
   const [symbol, setSymbol] = useState(value || "");
-  const screenHeight = typeof window !== "undefined" && window.scrollY;
   const [yFData, setYFData] = useState({});
   const [holData, setHolData] = useState({});
   const [volume, setVolume] = useState();
@@ -37,28 +36,28 @@ const CColumn = ({ className, value }) => {
 
   window.addEventListener("scroll", getScroll);
   const handleStockSelect = (val) => {
-    // if (val !== "" || val !== undefined) {
-    //   getStockModules(val, "statistics").then((res) => {
-    //     setYFData({ ...yFData, ...res?.body });
-    //   });
-    //   getStockModules(val, "financial-data").then((res) => {
-    //     setYFData({ ...yFData, ...res?.body });
-    //   });
-    //   getMetrics(val).then((res) => {
-    //     if (res?.length > 0) {
-    //       setHolData({ holData, ...res[0] });
-    //       // setMetrics(res[0]);
-    //     }
-    //   });
-    //   getVolume(val).then((res) => {
-    //     setVolume(res[0]?.volume);
-    //   });
-    //   getRatios(val).then((res) => {
-    //     if (res?.length > 0) {
-    //       setHolData({ holData, ...res[0] });
-    //     }
-    //   });
-    // }
+    if (val !== "" || val !== undefined) {
+      getStockModules(val, "statistics").then((res) => {
+        setYFData({ ...yFData, ...res?.body });
+      });
+      getStockModules(val, "financial-data").then((res) => {
+        setYFData({ ...yFData, ...res?.body });
+      });
+      getMetrics(val).then((res) => {
+        if (res?.length > 0) {
+          setHolData({ holData, ...res[0] });
+          // setMetrics(res[0]);
+        }
+      });
+      getVolume(val).then((res) => {
+        setVolume(res[0]?.volume);
+      });
+      getRatios(val).then((res) => {
+        if (res?.length > 0) {
+          setHolData({ holData, ...res[0] });
+        }
+      });
+    }
   };
 
   useEffect(() => {

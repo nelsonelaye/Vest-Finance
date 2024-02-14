@@ -1,11 +1,10 @@
 import React from "react";
-import ITable from "./Table";
+
 import { Table } from "@mantine/core";
 // import { cashflowData as data } from "@/data/holistic";
 import { formatMetric, formatMetricKey } from "@/utils/helpers";
 
 const CashflowTable = ({ data }) => {
-  const values = [];
   return (
     <Table striped>
       <Table.Thead>
