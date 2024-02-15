@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Layout } from "@/components";
 import { useSearchContext } from "@/context/SearchContext";
 import { useSidebarContext } from "@/context/SidebarContext";
-import { Alert, Modal } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IoAlertCircle } from "react-icons/io5";
 
@@ -33,7 +33,7 @@ export default function Home() {
         <Modal
           opened={opened}
           onClose={close}
-          size="auto"
+          size="md"
           centered
           withCloseButton
           radius="md"

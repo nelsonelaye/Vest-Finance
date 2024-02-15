@@ -14,7 +14,7 @@ const Footer = () => {
             target="_blank"
           >
             creator
-            <IoLogoLinkedin color="blue" className="text-inherit" />
+            <IoLogoLinkedin color="blue" className="text-inherit mt-1" />
           </a>
         </div>
       </aside>
