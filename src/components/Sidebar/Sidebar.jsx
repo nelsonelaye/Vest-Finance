@@ -47,7 +47,7 @@ const Sidebar = ({ setIsSidebarOpen }) => {
               <SearchField
                 variant="primary"
                 className=" mb-4"
-                description="start by searching stock symbols to get analysis"
+                description="Start by searching stock symbols to get analysis"
                 closeSidebar={() => {
                   setIsSidebarOpen(false);
                 }}
