@@ -3,7 +3,7 @@ import { CColumn, Layout } from "@/components";
 
 const Compare = () => {
   return (
-    <div className="scene_element scene_element--fadeinright  z-10">
+    <div className=" w-full z-10">
       <Layout>
         <main className=" w-10/12 sm:w-4/5 mx-auto">
           <div className="text-center my-10 mb-20">

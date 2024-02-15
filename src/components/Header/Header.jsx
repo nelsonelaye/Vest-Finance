@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Sidebar from "../Sidebar/Sidebar";
 import Link from "next/link";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/images/default.svg";
 import { usePathname } from "next/navigation";
 import { SearchField } from "../";
 import { useSearchContext } from "@/context/SearchContext";
@@ -11,11 +11,14 @@ import { useSearchContext } from "@/context/SearchContext";
 import UseAnimation from "react-useanimations";
 import searchToX from "react-useanimations/lib/searchToX";
 import "animate.css";
+import { useSidebarContext } from "@/context/SidebarContext";
 
 const Header = () => {
   const pathname = usePathname();
   const { isSearch, setIsSearch } = useSearchContext();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
+
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (pathname?.includes("search")) {
