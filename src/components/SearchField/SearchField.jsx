@@ -10,7 +10,15 @@ import styles from "./searchField.module.css";
 import { Loader } from "@mantine/core";
 import "animate.css";
 
-const SearchField = ({ variant, value, className, handleSelect, page }) => {
+const SearchField = ({
+  variant,
+  value,
+  className,
+  handleSelect,
+  page,
+  closeSidebar,
+  description,
+}) => {
   const searchParams = useSearchParams();
   const symbol = searchParams.get("ticker");
   const [searchQuery, setSearchQuery] = useState(symbol || value || "");
@@ -37,6 +45,10 @@ const SearchField = ({ variant, value, className, handleSelect, page }) => {
         variant === "small" ? "mx-auto" : "sm:w-[600px]"
       } sm:mx-auto ${className}`}
     >
+      <span className="text-[12px] text-neutral-500 mb-2 inline-block">
+        {description}
+      </span>
+
       <input
         type="text"
         name="ticker"
@@ -77,6 +89,7 @@ const SearchField = ({ variant, value, className, handleSelect, page }) => {
                   setSearchQuery(r.symbol);
                   handleSelect(r.symbol);
                   setSearchResult([]);
+                  closeSidebar();
                 }}
               >
                 <p className="text-sm mb-1">{r.name}</p>
@@ -91,6 +104,7 @@ const SearchField = ({ variant, value, className, handleSelect, page }) => {
                   className="  w-full px-6 py-4 border-b border-neutral-20 font-medium cursor-pointer"
                   onClick={() => {
                     setSearchResult([]);
+                    closeSidebar();
                   }}
                 >
                   <p className="text-sm mb-1">{r.name}</p>
