@@ -47,6 +47,7 @@ const Sidebar = ({ setIsSidebarOpen }) => {
               <SearchField
                 variant="primary"
                 className=" mb-4"
+                description="start by searching stock symbols to get analysis"
                 closeSidebar={() => {
                   setIsSidebarOpen(false);
                 }}
@@ -56,19 +57,19 @@ const Sidebar = ({ setIsSidebarOpen }) => {
                 onClick={() => {
                   setIsSidebarOpen(false);
                 }}
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium leading-7 text-gray-900 hover:bg-gray-50"
               >
                 Compare
               </Link>
               <a
                 href="#"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-neutral-50 hover:bg-gray-50"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium leading-7 text-neutral-50 hover:bg-gray-50"
               >
                 Advisory
               </a>
               <a
                 href="#"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-neutral-50 hover:bg-gray-50"
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium leading-7 text-neutral-50 hover:bg-gray-50"
               >
                 Learn
               </a>

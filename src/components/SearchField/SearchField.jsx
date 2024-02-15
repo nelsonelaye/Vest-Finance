@@ -17,6 +17,7 @@ const SearchField = ({
   handleSelect,
   page,
   closeSidebar,
+  description,
 }) => {
   const searchParams = useSearchParams();
   const symbol = searchParams.get("ticker");
@@ -44,6 +45,10 @@ const SearchField = ({
         variant === "small" ? "mx-auto" : "sm:w-[600px]"
       } sm:mx-auto ${className}`}
     >
+      <span className="text-[12px] text-neutral-500 mb-2 inline-block">
+        {description}
+      </span>
+
       <input
         type="text"
         name="ticker"
